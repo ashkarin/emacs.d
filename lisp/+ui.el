@@ -58,6 +58,12 @@
 
 ;;; Third-party packages
 
+;; theme
+(use-package zenburn-theme
+  :ensure t
+  :config
+  (load-theme 'zenburn t))
+
 ;; minor mode to highlight keywords
 (use-package hl-todo
   :ensure t
