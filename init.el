@@ -190,7 +190,10 @@
 
 ;; Add directories to Emacs's `load-path'
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-config-directory))
-(require '+core)
+(require '+editor)
 (require '+ui)
+(require '+tools)
+(require '+python)
+(require '+golang)
 
 ;;; init.el ends here

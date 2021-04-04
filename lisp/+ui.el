@@ -7,8 +7,7 @@
 
 ;;; Commentary:
 
-;; This file installs and configures various packages
-;; affecting user interface.
+;; Setup UI.
 
 ;;; License:
 
@@ -30,15 +29,13 @@
 ;;; Code:
 
 
-;;; Built-in packages
+;; Delimiters
+(use-package rainbow-delimiters
+  :ensure t
+  :hook (ielm-mode . rainbow-delimiters-mode))
 
-;; minor mode to highlight the current line
-(use-package hl-line
-  :straight nil
-  :config
-  (global-hl-line-mode +1))
 
-;; minor mode to visualize blanks (tabs, spaces, newline, etc)
+;; Visualization of tabs, spaces, newline, etc.
 (use-package whitespace
   :straight nil
   :hook ((prog-mode   . whitespace-mode)
@@ -48,23 +45,15 @@
   (setq whitespace-line-column 80) ;; limit line length
   (setq whitespace-style '(face tabs empty trailing lines-tail)))
 
-;; library to move point from window to window
-(use-package windmove
+
+;; Highlighting of the current line
+(use-package hl-line
   :straight nil
   :config
-  ;; use shift + arrow keys to switch between visible buffers
-  (windmove-default-keybindings))
+  (global-hl-line-mode +1))
 
 
-;;; Third-party packages
-
-;; theme
-(use-package zenburn-theme
-  :ensure t
-  :config
-  (load-theme 'zenburn t))
-
-;; minor mode to highlight keywords
+;; Highlighting of the keywords
 (use-package hl-todo
   :ensure t
   :hook (prog-mode . hl-todo-mode)
@@ -80,17 +69,36 @@
           ("BUG" error bold)
           ("XXX" font-lock-constant-face bold))))
 
-;; minor mode to highlights delimiters such as parentheses,
-;; brackets or braces according to their depth
-(use-package rainbow-delimiters
-  :ensure t
-  :hook (ielm-mode . rainbow-delimiters-mode))
 
-;; minor mode to set background color of strings that matches
-;; color names
+;; Sets background color of strings that matches color names
 (use-package rainbow-mode
   :ensure t
   :hook (prog-mode . rainbow-mode))
+
+
+;; Theme
+(use-package zenburn-theme
+  :ensure t
+  :config
+  (load-theme 'zenburn t))
+
+
+;; Fullscreen
+
+;; maximize the initial frame automatically
+(set-frame-parameter nil 'fullscreen 'fullboth)
+
+(defun toggle-fullscreen ()
+  (interactive)
+  (if (eq (frame-parameter nil 'fullscreen) 'fullboth)
+      (progn
+        (set-frame-parameter nil 'fullscreen 'fullheight)
+        (menu-bar-mode t))
+    (progn
+      (set-frame-parameter nil 'fullscreen 'fullboth)
+      (menu-bar-mode -1))))
+
+(global-set-key (kbd "<f12>") 'toggle-fullscreen) 
 
 
 (provide '+ui)
