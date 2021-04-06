@@ -36,7 +36,8 @@
 
 (use-package go-mode
   :ensure t
-  :hook (go-mode . go-mode-formatting))
+  :hook ((go-mode . go-mode-formatting)
+         (go-mode . lsp)))
 
 (use-package dap-go
   :straight nil

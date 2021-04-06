@@ -35,33 +35,69 @@
   (setq python-shell-interpreter "python3"))
 
 
-(use-package lsp-python-ms
-  :ensure t
-  :after (lsp-mode python)
-  :config
-  (setq lsp-python-ms-python-executable-cmd python-shell-interpreter))
+(use-package python-pytest
+  :ensure t)
 
 
 (use-package pyvenv
   :ensure t
-  :after python
-  :hook (python-mode . pyenv-mode)
+  :after (python)
   :config
-  (setq pyvenv-default-virtual-env-name "env")
   (setq pyvenv-mode-line-indicator
     '(pyvenv-virtual-env-name ("[venv:" pyvenv-virtual-env-name "]"))))
 
 
-(use-package python-pytest
-  :ensure t)
+(use-package lsp-python-ms
+  :ensure t
+  :after (lsp-mode python))
 
 
 (use-package dap-python
   :straight nil
   :after (dap-mode python)
   :config
-  (setq dap-python-executable python-shell-interpreter))
+  (setq dap-python-executable "python3")
+  (dap-register-debug-template "Python :: Run file (buffer)"
+                                (list :type "python"
+                                      :cwd (lsp-workspace-root)
+                                      :program nil
+                                      :debugger 'debugpy
+                                      :request "launch"
+                                      :name "Python :: Run file (buffer)")))
 
+
+(defun dap-python-install-packages ()
+  "Install required Python packages for dap."
+  (interactive)
+  (if 'pyvenv-virtual-env
+      (async-shell-command "pip install -U debugpy ptvsd")
+    (message "No active virtualenv.")))
+
+
+(defun pyvenv-autoload ()
+  "Automatically activates pyvenv version if .venv directory exists."
+  (if (equal major-mode 'python-mode)
+      (f-traverse-upwards
+        (lambda (path)
+          (if (f-root? path)
+              (progn
+                (pyvenv-deactivate)
+                (message "Deactivate python virtual environment"))
+            (let ((venv-path (f-expand ".venv" path)))
+                (if (f-exists? venv-path)
+                    (progn
+                      (message "Activating %s" venv-path)
+                      (pyvenv-activate venv-path)
+                      t))))) (projectile-project-root))
+    (pyvenv-deactivate)))
+
+
+;; Activate proper venv and LSP when python buffer opened
+(add-hook 'python-mode-hook 'pyvenv-autoload)
+(add-hook 'python-mode-hook 'lsp)
+
+;; Update venv when buffer refocused
+(add-hook 'buffer-list-update-hook 'pyvenv-autoload)
 
 (provide '+python)
 ;;; +python.el ends here.
