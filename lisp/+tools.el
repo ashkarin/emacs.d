@@ -154,6 +154,11 @@
   :ensure t)
 
 
+;; Kubernetes
+(use-package kubel
+  :ensure t)
+
+
 ;; Runs queries from a plain-text query sheet
 (use-package restclient
   :ensure t)
