@@ -65,8 +65,7 @@
 (use-package lsp-mode
   :ensure t
   :commands lsp-install-server
-  :hook ((prog-mode . lsp)
-         (lsp-mode . lsp-enable-which-key-integration))
+  :hook (lsp-mode . lsp-enable-which-key-integration)
   :init
   (setq lsp-session-file (expand-file-name "lsp-session" user-emacs-cache-directory)
         lsp-server-install-dir (expand-file-name "lsp/" user-emacs-cache-directory))
@@ -94,7 +93,6 @@
 ;;  Debug Adapter Protocol
 (use-package dap-mode
   :ensure t
-  :hook (prog-mode . dap-mode)
   :config
   (setq dap-print-io t))
 
