@@ -151,16 +151,16 @@
 (global-set-key (kbd "C-<tab>") 'complete-symbol)
 
 ;; Windows
-(define-key global-map (kbd "C-x w") (make-sparse-keymap))
-(global-set-key (kbd "C-x w o") 'other-window)
-(global-set-key (kbd "C-x w k") 'delete-window)
-(global-set-key (kbd "C-x w s v") 'split-window-vertically)
-(global-set-key (kbd "C-x w s h") 'split-window-horizontally)
+(define-key global-map (kbd "C-c w") (make-sparse-keymap))
+(global-set-key (kbd "C-c w o") 'other-window)
+(global-set-key (kbd "C-c w k") 'delete-window)
+(global-set-key (kbd "C-c w s v") 'split-window-vertically)
+(global-set-key (kbd "C-c w s h") 'split-window-horizontally)
 
 ;; Buffers
-(define-key global-map (kbd "C-x b") (make-sparse-keymap))
-(global-set-key (kbd "C-x b b") 'switch-to-buffer)
-(global-set-key (kbd "C-x b k") 'kill-buffer)
+(define-key global-map (kbd "C-c b") (make-sparse-keymap))
+(global-set-key (kbd "C-c b b") 'switch-to-buffer)
+(global-set-key (kbd "C-c b k") 'kill-buffer)
 
 
 (provide '+editor)
