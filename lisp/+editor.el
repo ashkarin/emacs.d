@@ -28,6 +28,33 @@
 
 ;;; Code:
 
+;;
+;; Keybindings
+
+;; Completion on text around point
+(global-set-key (kbd "C-<tab>") 'complete-symbol)
+
+;; Windows
+(define-key global-map (kbd "C-c w") (make-sparse-keymap))
+(global-set-key (kbd "C-c w o") 'other-window)
+(global-set-key (kbd "C-c w k") 'delete-window)
+(global-set-key (kbd "C-c w s v") 'split-window-vertically)
+(global-set-key (kbd "C-c w s h") 'split-window-horizontally)
+
+;; Buffers
+(define-key global-map (kbd "C-c b") (make-sparse-keymap))
+(global-set-key (kbd "C-c b b") 'switch-to-buffer)
+(global-set-key (kbd "C-c b k") 'kill-buffer)
+
+;; Regions
+(define-key global-map (kbd "C-c r") (make-sparse-keymap))
+(global-set-key (kbd "C-c r f f") 'fill-region)
+(global-set-key (kbd "C-c r f j") 'json-pretty-print)
+(global-set-key (kbd "C-c r i") 'indent-region)
+
+
+;;
+;; Modules
 
 ;; Preserves location in files when saving
 (use-package saveplace
@@ -106,7 +133,6 @@
         company-global-modes '(not erc-mode help-mode gud-mode))
   (global-company-mode))
 
-
 ;; Treemacs
 (use-package treemacs
   :ensure t
@@ -129,7 +155,7 @@
   :ensure t)
 
 
-;; Displays the key bindings following currently 
+;; Displays the key bindings following currently
 ;; entered incomplete command
 (use-package which-key
   :ensure t
@@ -144,23 +170,19 @@
   (electric-pair-mode +1))
 
 
-;;
-;; Keybindings
+;; Navigation from window to window
+(use-package windmove
+  :straight nil
+  :config
+  ;; use shift + arrow keys to switch between visible buffers
+  (windmove-default-keybindings))
 
-;; Completion on text around point
-(global-set-key (kbd "C-<tab>") 'complete-symbol)
 
-;; Windows
-(define-key global-map (kbd "C-c w") (make-sparse-keymap))
-(global-set-key (kbd "C-c w o") 'other-window)
-(global-set-key (kbd "C-c w k") 'delete-window)
-(global-set-key (kbd "C-c w s v") 'split-window-vertically)
-(global-set-key (kbd "C-c w s h") 'split-window-horizontally)
-
-;; Buffers
-(define-key global-map (kbd "C-c b") (make-sparse-keymap))
-(global-set-key (kbd "C-c b b") 'switch-to-buffer)
-(global-set-key (kbd "C-c b k") 'kill-buffer)
+;; Rotations
+(use-package rotate
+  :ensure t
+  :bind (("C-c w r w" . rotate-window)
+         ("C-c w r l" . rotate-layout)))
 
 
 (provide '+editor)
