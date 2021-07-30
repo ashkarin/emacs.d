@@ -1,5 +1,11 @@
 etc
 var
 transient
+projects
+eshell
+.dap-breakpoints
+.cache
+.extension
+projectile.cache
 *.eln
 *.elc
