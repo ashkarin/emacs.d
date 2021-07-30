@@ -28,6 +28,7 @@
 
 ;;; Code:
 
+
 ;;
 ;; Keybindings
 
@@ -48,13 +49,15 @@
 
 ;; Regions
 (define-key global-map (kbd "C-c r") (make-sparse-keymap))
-(global-set-key (kbd "C-c r f f") 'fill-region)
-(global-set-key (kbd "C-c r f j") 'json-pretty-print)
-(global-set-key (kbd "C-c r i") 'indent-region)
+(global-set-key (kbd "C-c r TAB") 'indent-region)
+(global-set-key (kbd "C-c r j") 'json-pretty-print)
+(global-set-key (kbd "C-c r c") 'comment-region)
+(global-set-key (kbd "C-c r u") 'uncomment-region)
 
 
 ;;
-;; Modules
+;; Packages
+
 
 ;; Preserves location in files when saving
 (use-package saveplace
