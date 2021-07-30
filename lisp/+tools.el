@@ -28,6 +28,8 @@
 
 ;;; Code:
 
+;;
+;; Packages
 
 (use-package dired
   :straight nil
@@ -42,6 +44,7 @@
   (setq dired-dwim-target t)
   ;; enable extensions like C-x C-j(dired-jump)
   (require 'dired-x))
+
 
 ;; Git
 (use-package magit
@@ -73,6 +76,11 @@
   (setq lsp-headerline-breadcrumbs-enable nil)
   ;; Keep workspace alive when the last workspace buffer is closed
   (setq lsp-keep-worksapce-alive t)
+  ;;
+  (setq lsp-eldoc-enable-hover t)
+  (setq lsp-eldoc-render-all t)
+  (setq lsp-signature-auto-activate t)
+  (setq lsp-signature-render-documentation t)
   ;; Disable some features that might slowdown
   (setq lsp-enable-folding nil
         lsp-enable-on-type-formatting nil
@@ -82,12 +90,14 @@
   :ensure t
   :hook (lsp-mode-hook . lsp-ui-mode)
   :bind (:map lsp-ui-mode-map
-  ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
-  ([remap xref-find-references] . lsp-ui-peek-find-references)
-  ("C-c u" . lsp-ui-imenu))
+            ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
+            ([remap xref-find-references] . lsp-ui-peek-find-references)
+            ("C-c u" . lsp-ui-imenu))
   :config
   (setq lsp-ui-doc-position 'at-point
-        lsp-ui-doc-enable t))
+        lsp-ui-doc-enable nil)
+  ;; `C-g'to close doc
+  (advice-add #'keyboard-quit :before #'lsp-ui-doc-hide))
 
 
 ;;  Debug Adapter Protocol
@@ -107,7 +117,7 @@
 ;; Project interaction
 (use-package projectile
   :ensure t
-  :bind (:prefix "C-c p"
+  :bind (:prefix "C-x p"
          :prefix-map projectile-map
          :prefix-docstring "Projectile"
             ("o" . projectile-switch-project)
@@ -115,7 +125,8 @@
             ("d" . projectile-dired)
             ("i" . projectile-project-info)
             ("g" . projectile-grep)
-            ("s" . projectile-switch-project))
+            ("s" . projectile-switch-project)
+            ("e" . projectile-run-vterm))
   :init
   (setq projectile-project-search-path '("~/projects/" "~/work/")
         projectile-known-projects-file (expand-file-name "projectile-bookmarks.eld" user-emacs-cache-directory))
@@ -125,13 +136,6 @@
 (use-package treemacs-projectile
   :after (treemacs projectile)
   :ensure t)
-
-;; Navigation from window to window
-(use-package windmove
-  :straight nil
-  :config
-  ;; use shift + arrow keys to switch between visible buffers
-  (windmove-default-keybindings))
 
 
 ;; Navigation to visible text using a char-based decision tree
@@ -166,4 +170,3 @@
 
 (provide '+tools)
 ;;; +tools.el ends here.
-
