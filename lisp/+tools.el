@@ -114,6 +114,14 @@
   (setq dap-auto-configure-features '(locals sessions tooltip)))
 
 
+;; Vterm
+(use-package vterm
+  :ensure t
+  :bind (:map vterm-mode-map;
+         ("C-S" . isearch-repeat-forward)
+         ("C-R" . isearch-repeat-backward)))
+
+
 ;; Project interaction
 (use-package projectile
   :ensure t
@@ -160,11 +168,6 @@
 
 ;; Kubernetes
 (use-package kubel
-  :ensure t)
-
-
-;; Runs queries from a plain-text query sheet
-(use-package restclient
   :ensure t)
 
 
