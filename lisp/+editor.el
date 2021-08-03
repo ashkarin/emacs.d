@@ -77,7 +77,8 @@
         savehist-autosave-interval 60
         ;; keep the home clean
         savehist-file (expand-file-name "savehist" user-emacs-cache-directory))
-  (savehist-mode +1))
+  :init
+  (savehist-mode))
 
 
 ;; Sets unique names for buffer dependent on file name
@@ -95,8 +96,8 @@
 ;; Auto-save buffers, when certain events happen
 (use-package super-save
   :ensure t
-  :config
-  (super-save-mode +1))
+  :init
+  (super-save-mode))
 
 
 ;; Undo tree
@@ -107,7 +108,8 @@
   (setq undo-tree-history-directory-alist
         `((".*" . ,temporary-file-directory)))
   (setq undo-tree-auto-save-history t)
-  (global-undo-tree-mode +1))
+  :init
+  (global-undo-tree-mode))
 
 
 ;; Items selection from a list
@@ -134,6 +136,7 @@
         company-tooltip-align-annotations t
         company-tooltip-flip-when-above t
         company-global-modes '(not erc-mode help-mode gud-mode))
+  :init
   (global-company-mode))
 
 ;; Treemacs
@@ -162,8 +165,8 @@
 ;; entered incomplete command
 (use-package which-key
   :ensure t
-  :config
-  (which-key-mode +1))
+  :init
+  (which-key-mode))
 
 
 ;; Delimiters
@@ -176,7 +179,7 @@
 ;; Navigation from window to window
 (use-package windmove
   :straight nil
-  :config
+  :init
   ;; use shift + arrow keys to switch between visible buffers
   (windmove-default-keybindings))
 
