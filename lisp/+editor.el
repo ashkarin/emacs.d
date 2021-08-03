@@ -113,17 +113,34 @@
 
 
 ;; Items selection from a list
-(use-package selectrum
+(use-package vertico
   :ensure t
+  :init
+  (vertico-mode)
   :config
-  (selectrum-mode +1))
+  ;; This fixes a problem of hidden entry line
+  (defun vertico--display-candidates (lines)
+  "Update candidates overlay `vertico--candidates-ov' with LINES."
+    (move-overlay vertico--candidates-ov (point-max) (point-max))
+    (overlay-put vertico--candidates-ov 'after-string
+                 (apply #'concat #(" " 0 1 (cursor t)) (and lines "\n") lines))
+    (vertico--resize-window (length lines))))
 
-(use-package selectrum-prescient
+(use-package orderless
+  :after vertico
   :ensure t
-  :config
-  (selectrum-prescient-mode +1)
-  (prescient-persist-mode +1))
+  :init
+  (setq completion-styles '(orderless)
+        completion-category-defaults nil
+        completion-category-overrides '((file (styles partial-completion)))))
 
+(use-package marginalia
+  :after vertico
+  :ensure t
+  :custom
+  (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
+  :init
+  (marginalia-mode))
 
 ;; In-buffer completion mechanism
 (use-package company
