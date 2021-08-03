@@ -186,13 +186,6 @@
   (which-key-mode))
 
 
-;; Delimiters
-(use-package elec-pair
-  :straight nil
-  :config
-  (electric-pair-mode +1))
-
-
 ;; Navigation from window to window
 (use-package windmove
   :straight nil
