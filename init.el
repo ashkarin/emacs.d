@@ -31,6 +31,7 @@
 (when (version< emacs-version "26.1")
   (error "Emacs 26.1 or higher is required."))
 
+
 ;; Collect some system information
 (defconst is-mac     (eq system-type 'darwin))
 (defconst is-windows (memq system-type '(cygwin windows-nt ms-dos)))
@@ -195,5 +196,6 @@
 (require '+tools)
 (require '+python)
 (require '+golang)
+(require '+org)
 
 ;;; init.el ends here
