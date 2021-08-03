@@ -42,11 +42,6 @@
 (global-set-key (kbd "C-c w s v") 'split-window-vertically)
 (global-set-key (kbd "C-c w s h") 'split-window-horizontally)
 
-;; Buffers
-(define-key global-map (kbd "C-c b") (make-sparse-keymap))
-(global-set-key (kbd "C-c b b") 'switch-to-buffer)
-(global-set-key (kbd "C-c b k") 'kill-buffer)
-
 ;; Regions
 (define-key global-map (kbd "C-c r") (make-sparse-keymap))
 (global-set-key (kbd "C-c r TAB") 'indent-region)
