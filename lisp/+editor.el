@@ -208,5 +208,13 @@
          ("C-c w r l" . rotate-layout)))
 
 
+;; Workspaces
+(use-package perspective
+  :bind
+  ("C-x C-b" . persp-list-buffers*)
+  :init
+  (persp-mode))
+
+
 (provide '+editor)
 ;;; +editor.el ends here.
