@@ -198,8 +198,9 @@
 
 ;; Workspaces
 (use-package perspective
-  :bind
-  ("C-x C-b" . persp-list-buffers*)
+  :bind (("C-x C-b" . persp-buffer-menu)
+         ("C-x b" . persp-switch-to-buffer*)
+         ("C-x k" . persp-kill-buffer*))
   :init
   (persp-mode))
 
