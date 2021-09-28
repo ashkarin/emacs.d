@@ -86,7 +86,7 @@
 ;; Fullscreen
 
 ;; maximize the initial frame automatically
-(set-frame-parameter nil 'fullscreen 'fullboth)
+;(set-frame-parameter nil 'fullscreen 'fullboth)
 
 (defun toggle-fullscreen ()
   (interactive)
@@ -98,7 +98,7 @@
       (set-frame-parameter nil 'fullscreen 'fullboth)
       (menu-bar-mode -1))))
 
-(global-set-key (kbd "<f12>") 'toggle-fullscreen) 
+(global-set-key (kbd "<f12>") 'toggle-fullscreen)
 
 
 (provide '+ui)
