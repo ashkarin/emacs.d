@@ -46,7 +46,6 @@
   (setq pyvenv-mode-line-indicator
     '(pyvenv-virtual-env-name ("[venv:" pyvenv-virtual-env-name "]"))))
 
-
 (use-package lsp-python-ms
   :ensure t
   :after (lsp-mode python))
@@ -74,22 +73,35 @@
     (message "No active virtualenv.")))
 
 
-(defun pyvenv-autoload ()
+(defun pyvenv-autoload (&optional dir)
   "Automatically activates pyvenv version if .venv directory exists."
+  (interactive)
   (if (equal major-mode 'python-mode)
-      (f-traverse-upwards
-        (lambda (path)
-          (if (f-root? path)
+    (progn
+      (unless dir (setq dir (f-dirname (buffer-file-name))))
+      (if (f-dir? dir)
+        (f-traverse-upwards
+          (lambda (path)
+            (if (f-root? path)
               (progn
-                (pyvenv-deactivate)
-                (message "Deactivate python virtual environment"))
-            (let ((venv-path (f-expand ".venv" path)))
-                (if (f-exists? venv-path)
-                    (progn
-                      (message "Activating %s" venv-path)
-                      (pyvenv-activate venv-path)
-                      t))))) (projectile-project-root))
-    (pyvenv-deactivate)))
+	        (pyvenv-deactivate)
+                (message "Root directory. Deactivate python virtual environment.")
+                t)
+              (let ((venv-path (f-expand ".venv" path)))
+	        (if (f-exists? venv-path)
+	          (progn
+                    (message "Activating %s" venv-path)
+                    (pyvenv-activate venv-path)
+                    t)
+	          (if (f-same? path (projectile-project-root))
+	            (progn
+	              (pyvenv-deactivate)
+	              (message "Project root directory is reached. Deactivate python virtual environment as no .venv directory found.")
+	              t)
+	           ;; Check the parent directory
+		   nil)))))
+           dir)
+         (message "%s is not a directory" dir)))))
 
 
 ;; Activate proper venv and LSP when python buffer opened
