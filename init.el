@@ -115,11 +115,11 @@
     (let ((eln-cache-dir (expand-file-name "eln" user-emacs-cache-directory)))
       (setcar comp-eln-load-path eln-cache-dir)))
 
-(with-eval-after-load 'comp
-  ;; Disable native-compilation for some packages by adding regexes
-  ;; to `comp-deferred-compilation-deny-list'
-  (mapc (apply-partially #'add-to-list 'comp-deferred-compilation-deny-list)
-      (list "\\(?:[^z-a]*-autoloads\\.el$\\)")))
+;(with-eval-after-load 'comp
+;  ;; Disable native-compilation for some packages by adding regexes
+;  ;; to `comp-deferred-compilation-deny-list'
+;  (mapc (apply-partially #'add-to-list 'comp-deferred-compilation-deny-list)
+;      (list "\\(?:[^z-a]*-autoloads\\.el$\\)")))
 
 
 ;;; Install and Configure the `straight.el' package manager
