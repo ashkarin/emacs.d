@@ -136,7 +136,7 @@
             ("s" . projectile-switch-project)
             ("e" . projectile-run-vterm))
   :init
-  (setq projectile-project-search-path '("~/projects/" "~/work/")
+  (setq projectile-project-search-path '("~/projects/" "~/src/")
         projectile-known-projects-file (expand-file-name "projectile-bookmarks.eld" user-emacs-cache-directory))
   :config
   (projectile-mode +1))
